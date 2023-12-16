@@ -1,0 +1,41 @@
+{
+  "app": {
+    "signingConfigs": [
+      {
+        "name": "default",
+        "type": "HarmonyOS",
+        "material": {
+          "certpath": "/Users/henry/.ohos/config/auto_debug_SmartMusic_com.example.smartmusic_80086000131829978.cer",
+          "storePassword": "0000001BF6BF36FA9A61BB99F7F377104EB6D3CBD0EB0E26D30E11F3071F3020D734213EE5EC831A6EEA10",
+          "keyAlias": "debugKey",
+          "keyPassword": "0000001B9FCEBAA79758F78F4585E1C2F5A07D966CB4A0286FFD599001C51820B2AF60CC59279B895B6207",
+          "profile": "/Users/henry/.ohos/config/auto_debug_SmartMusic_com.example.smartmusic_80086000131829978.p7b",
+          "signAlg": "SHA256withECDSA",
+          "storeFile": "/Users/henry/.ohos/config/auto_debug_SmartMusic_com.example.smartmusic_80086000131829978.p12"
+        }
+      }
+    ],
+    "compileSdkVersion": 9,
+    "compatibleSdkVersion": 9,
+    "products": [
+      {
+        "name": "default",
+        "signingConfig": "default",
+      }
+    ]
+  },
+  "modules": [
+    {
+      "name": "entry",
+      "srcPath": "./entry",
+      "targets": [
+        {
+          "name": "default",
+          "applyToProducts": [
+            "default"
+          ]
+        }
+      ]
+    }
+  ]
+}
