@@ -10,7 +10,7 @@ import { CommonConstant as Const, ContentType } from '../common/CommonConstants'
  */
 export function httpRequestGet(url: string): Promise<ResponseResult> {
   let httpRequest = http.createHttp();
-  let responseResult = httpRequest.request(url, {
+  let responseResult = httpRequest.request(`${Const.SERVER}/${url}`, {
     method: http.RequestMethod.GET,
     readTimeout: Const.HTTP_READ_TIMEOUT,
     header: {

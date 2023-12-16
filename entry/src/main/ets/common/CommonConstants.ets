@@ -19,7 +19,8 @@ export class CommonConstant {
   /**
    * The host address of the server.
    */
-  static readonly SERVER: string = 'http://**.**.**.**:9588';
+  // static readonly SERVER: string = 'http://47.115.231.1:9002';
+  static readonly SERVER: string = 'http://192.168.3.176:9002';
 
   /**
    * Get the news type.

@@ -1,6 +1,6 @@
 import router from '@ohos.router'
 import { MColor } from '../common/CommonConstants'
-import RecommendViewModel, { AlbumsItem, AlbumInfoBean, AlbumInfo } from '../models/RecommendModel'
+import RecommendViewModel, { AlbumsItem, AlbumInfoBean, AlbumInfo, SingBean } from '../models/RecommendModel'
 
 @Entry
 @Component
@@ -12,14 +12,34 @@ struct SongListPage {
     pic: ''
   }
   @State singList: AlbumInfo[] = []
+  @State songMap: Record<string, string> = {}
+  // @State url
 
   aboutToAppear() {
     const params: AlbumsItem = router.getParams() as AlbumsItem
     this.singItem = params
 
-    RecommendViewModel.getAlbumInfoList(this.singItem.id).then((res: AlbumInfoBean) => {
-      this.singList = res.songs
+    RecommendViewModel.getAlbumInfoList(this.singItem.id)
+      .then((res: AlbumInfoBean) => {
+        this.singList = res.songs
+        return res.songs
+      }).then(result => {
+      this.getSongUrl(result)
     })
+  }
+
+  getSongUrl(list: AlbumInfo[]) {
+    let mid = ''
+    for (let ele of list) {
+      mid += `mid[]=${ele.mid}&`
+    }
+    RecommendViewModel.getSongUrlsList(mid)
+      .then((res: SingBean) => {
+        for (let item of this.singList) {
+          item.url = res.map[item.mid]
+        }
+        this.songMap = res.map
+      })
   }
 
   build() {
@@ -42,7 +62,7 @@ struct SongListPage {
               Image(this.singItem.pic)
                 .width('100%')
                 .height(260)
-                .margin({bottom: 30})
+                .margin({ bottom: 30 })
             }
 
             if (this.singList.length) {
@@ -55,9 +75,10 @@ struct SongListPage {
                 .alignItems(HorizontalAlign.Start)
                 .padding({ left: 20, top: 10, right: 20, bottom: 10 })
                 .onClick(() => {
+                  this.singList.unshift(item)
                   router.pushUrl({
                     url: 'pages/PlayerPage',
-                    params: item
+                    params: { list: this.singList }
                   })
                 })
               })

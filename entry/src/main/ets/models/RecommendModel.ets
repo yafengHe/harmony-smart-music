@@ -1,5 +1,4 @@
 import { httpRequestGet } from '../utils/HttpUtil';
-import { CommonConstant as Const } from '../common/CommonConstants';
 import { ResponseResult } from '.';
 
 export class SliderItem {
@@ -31,6 +30,10 @@ export class AlbumInfo {
   url: string
 }
 
+export class SingBean {
+  map: Record<string, string>
+}
+
 export class AlbumInfoBean {
   songs: AlbumInfo[]
 }
@@ -38,7 +41,7 @@ export class AlbumInfoBean {
 class RecommendViewModel {
   getNewsTypeList(): Promise<RecommendBean> {
     return new Promise((resolve: Function) => {
-      let url = `http://192.168.3.176:9002/api/getRecommend`;
+      let url = `api/getRecommend`;
       httpRequestGet(url).then((data: ResponseResult) => {
         if (data.code === 0) {
           resolve(data.result);
@@ -53,7 +56,7 @@ class RecommendViewModel {
 
   getAlbumInfoList(id: number): Promise<AlbumInfoBean> {
     return new Promise((resolve: Function) => {
-      let url = `http://192.168.3.176:9002/api/getAlbum?id=${id}`;
+      let url = `api/getAlbum?id=${id}`;
       httpRequestGet(url).then((data: ResponseResult) => {
         if (data.code === 0) {
           resolve(data.result);
@@ -66,9 +69,9 @@ class RecommendViewModel {
     });
   }
 
-  getSongUrlsList(): Promise<Map<string, string>> {
+  getSongUrlsList(mid): Promise<SingBean> {
     return new Promise((resolve: Function) => {
-      let url = `http://192.168.3.176:9002/api/getSongsUrl`;
+      let url = `api/getSongsUrl?${mid}`;
       httpRequestGet(url).then((data: ResponseResult) => {
         if (data.code === 0) {
           resolve(data.result);
